@@ -17,7 +17,7 @@ php composer.phar require --prefer-dist huanguang/image "dev-master"
 or add
 
 ```
-"huanguang/image": "huanguang/image"
+"huanguang/image": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
