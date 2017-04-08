@@ -71,3 +71,6 @@ Once the extension is installed, simply use it in your code by  :
     'fileSingleSizeLimit'=>51200000,//允许单个文件上传大小
     'chunkSize'=>524288,//分片大小
     ]); ?>
+    
+    //图片接收为img[]，数组形式
+    //图片删除是没有数据库操作的，需另外增加
