@@ -2,14 +2,28 @@
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
+// use huanguang\image\assets\UploadsAsset;
+// UploadsAsset::register($this);
+// UploadsAsset::addscript($this,'/js/jquery.js');
+// UploadsAsset::addscript($this,'/css/diyupload/js/webuploader.html5only.min.js');
+// UploadsAsset::addscript($this,'/css/diyupload/js/diyUpload.js');
 ?>
 
-<div class="div_sc">
-				<h2>上传电脑中图片</h2>
-				<div id="test1" ></div>
+<div class="div_sc form-group">
+				<h2><?=$data['title']?></h2>
+				<div id="test1" style="    background: url(<?=$data['imgtile']?>) no-repeat center center;" ></div>
 				<div class="parentFileBox" style="width: 180px;"> 						
 					<ul class="fileBoxUl">
-						
+					<?php if(!empty($model)):?>
+					<?php foreach($model as $key => $value):?>
+						<li class="diyUploadHover" id="aaa<?=$value['id']?>"> 
+							<div class="viewThumb">
+								<?= Html::img($data['imgpath'].$value['imgurl'])?>
+							</div>
+							<div class="diyCancel" onclick="del_img(<?=$value['id']?>,'<?=$value['imgurl']?>','aaa<?=$value['id']?>');"></div> 			
+						</li>
+					<?php endforeach;?>
+				<?php endif;?>
 					</ul>					
 				</div>
 				<script type="text/javascript">
@@ -18,15 +32,26 @@ use yii\bootstrap\Html;
 					* 其他参数同WebUploader
 					*/
 					$('#test1').diyUpload({
-						url:"{:U('Sell/fileupload')}",
+						url:"<?= Url::to(['image-upload']);?>",
 						success:function( data ) {
-							var span =$("<input type='hidden' value='"+data.imgname+"' name='img[]'>");
-							$("#tttt").val(1);
-							$("#test1").append(span);
+							if(data.error == 0){
+								var span =$("<input type='hidden' value='"+data.imgname+"' name='img[]'>");
+								//$("#tttt").val(1);
+								$("#test1").append(span);
+							}
 						},
 						error:function( err ) {
 							console.info( err );	
-						}
+						},
+						buttonText : '<?=$data['buttonText']?>',
+						chunked:true,
+						// 分片大小
+						chunkSize:<?=$data['chunkSize']?>,
+						//最大上传的文件数量, 总文件大小,单个文件大小(单位字节);
+						fileNumLimit:<?=$data['fileNumLimit']?>,
+						fileSizeLimit:<?=$data['fileSizeLimit']?>,
+						fileSingleSizeLimit:<?=$data['fileSingleSizeLimit']?>,
+						accept: {}
 					});
 
 					$('#as').diyUpload({
@@ -54,13 +79,13 @@ use yii\bootstrap\Html;
 						
 							$.ajax({
 				             type: "POST",
-				             url: "{:U('Sell/del_img')}",
+				             url: "<?= Url::to(['image-del']);?>",
 				             data: {id:id,imgurl:imgurl},
 				             dataType: "json",
 				             success: function(datas){
-				             		if(datas == '1'){
+				             		if(datas.error == 0){
 				             			$("#"+data).remove();
-				             		}else if(datas == '0'){
+				             		}else if(datas.error == 1){
 				             			alert('删除失败，请稍后重试！！！');
 				             		}else{
 				             			alert('连接服务器失败，请稍后重试！！！');
@@ -71,5 +96,5 @@ use yii\bootstrap\Html;
          				
 					}
 				</script>
-                <div class="clear"></div>
+                <div class="clear" style="clear: both;"></div>
 	    	</div>

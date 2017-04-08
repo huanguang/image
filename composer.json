@@ -1,6 +1,6 @@
 {
     "name": "huanguang/yii2-image",
-    "description": "基于cropper的一款头像上传yii2组件",
+    "description": "多图上传插件",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
     "license": "BSD-4-Clause",

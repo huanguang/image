@@ -1,6 +1,6 @@
 <?php
 
-namespace huanguang\image;
+namespace huanguang\image\assets;
 use Yii;
 use yii\web\AssetBundle;
 
@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  * @copyright Copyright (c) 2015 Yii中文网
  * @author Xianan Huang <xianan_huang@163.com>
  */
-class UploadyAsset extends AssetBundle
+class UploadsAsset extends AssetBundle
 {
     public $css = [
         'css/diyupload/css/webuploader.css',
@@ -17,14 +17,19 @@ class UploadyAsset extends AssetBundle
     ];
     
     public $js = [
-        'js/jquery.js',
+        //'js/jquery.js',
+        'css/diyupload/js/webuploader.html5only.min.js',
     	'css/diyupload/js/diyUpload.js',
-    	'css/diyupload/js/webuploader.html5only.min.js',
+    	
     ];
     
     public $depends = [
         'yii\web\YiiAsset',
     ];
+    public $jsOptions = [  
+        'position' => \yii\web\View::POS_HEAD,   // 这是设置所有js放置的位置  
+    ]; 
+ 
     
     /**
      * 初始化：sourcePath赋值
@@ -34,4 +39,13 @@ class UploadyAsset extends AssetBundle
     {
         $this->sourcePath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR . 'statics';
     }
+
+    // public static function addscript($view, $jsfile) { 
+    // $view->registerJsFile($jsfile, [UploadsAsset::className(), 'depends' => 'vendor\huanguang\image\assets\UploadsAsset']); 
+    // } 
+
+     public static function addScript($view, $jsfile) {
+        $view->registerJsFile($jsfile, [UploadsAsset::className(),]);
+    }
+
 }
