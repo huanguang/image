@@ -11,13 +11,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require huanguang/image=1.1.0
+php composer.phar require --prefer-dist huanguang/image "dev-master"
 ```
 
 or add
 
 ```
-"huanguang/image": "1.1.0"
+"huanguang/image": "huanguang/image"
 ```
 
 to the require section of your `composer.json` file.
